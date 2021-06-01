@@ -164,26 +164,26 @@ export default function Listing(){
 		}
 	}
 
-	const { data: coordinate } = useSWR(["/api/distance", originCoordinates.toString()], (url, origins) => fetchDistance(url, origins), { revalidateOnFocus: false });
+	// const { data: coordinate } = useSWR(["/api/distance", originCoordinates.toString()], (url, origins) => fetchDistance(url, origins), { revalidateOnFocus: false });
 
 	const { data: userBookmark } = useSWR(user ? ["/api/userBookmarks", user.sub] : null, (url, id) => fetchBookmarks(url, id), { revalidateOnFocus: true });
 	// if (userBookmark) {
 	// 	console.log(userBookmark)
 	// }
 
-	const determineIndex = (index) => {
-		let coordinateIndex = origins.indexOf(index)
-		if (coordinate) {
-			let value = coordinate.rows[coordinateIndex].elements[0].distance.value.toString()
-			let finalValue;
-			if (value.length == 7) {
-				finalValue = parseFloat((value.substring(0, 6) / 100).toFixed(2))
-			} else if (value.length == 5) {
-				finalValue = parseFloat((value.substring(0, 4) / 100).toFixed(2))
-			}
-			return finalValue
-		}
-	}
+	// const determineIndex = (index) => {
+	// 	let coordinateIndex = origins.indexOf(index)
+	// 	if (coordinate) {
+	// 		let value = coordinate.rows[coordinateIndex].elements[0].distance.value.toString()
+	// 		let finalValue;
+	// 		if (value.length == 7) {
+	// 			finalValue = parseFloat((value.substring(0, 6) / 100).toFixed(2))
+	// 		} else if (value.length == 5) {
+	// 			finalValue = parseFloat((value.substring(0, 4) / 100).toFixed(2))
+	// 		}
+	// 		return finalValue
+	// 	}
+	// }
 
 	const { data: count } = useSWR("/api/count");
 
@@ -464,11 +464,14 @@ export default function Listing(){
 							<div className="grid grid-cols-1 gap-0 h-full xl:gap-8 lg:gap-8 xl:grid-cols-2 lg:grid-cols-2 overflow-auto">
 								{filteredJobs && filteredJobs.map((item, index) => {
 									return (
+										// <div className={`${
+										// 	determineIndex(item.origin.coordinates.lat+","+item.origin.coordinates.long) <= sliderVal ?
+										// 	"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0"
+										// 	:
+										// 	"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0 hidden"
+										// }`} key={index}>
 										<div className={`${
-											determineIndex(item.origin.coordinates.lat+","+item.origin.coordinates.long) <= sliderVal ?
 											"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0"
-											:
-											"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0 hidden"
 										}`} key={index}>
 											<div className="px-7 py-7 pb-3 border-b border-gray-200">
 												<div className="w-full flex justify-between">
@@ -519,11 +522,14 @@ export default function Listing(){
 								})}
 								{specificJob && specificJob.map((item, index) => {
 									return (
+										// <div className={`${
+										// 	determineIndex(item.origin.coordinates.lat+","+item.origin.coordinates.long) <= sliderVal ?
+										// 	"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0"
+										// 	:
+										// 	"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0 hidden"
+										// }`} key={index}>
 										<div className={`${
-											determineIndex(item.origin.coordinates.lat+","+item.origin.coordinates.long) <= sliderVal ?
 											"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0"
-											:
-											"w-full bg-white rounded-md h-25rem mt-5 xl:mt-0 lg:mt-0 hidden"
 										}`} key={index}>
 											<div className="px-7 py-7 pb-3 border-b border-gray-200">
 												<div className="w-full flex justify-between">
